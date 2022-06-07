@@ -53,6 +53,27 @@
   width: 100%;
 }
 
+.counter {
+  background-color: rgb(37, 91, 167);
+  height: 200px;
+  width: 200px;
+  color: white;
+  margin: 5rem auto;
+  display: grid;
+}
+
+.counter-inner {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.counter-inner button {
+  color: white;
+  border: none;
+  background-color: rgb(245, 179, 47);
+}
+
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;

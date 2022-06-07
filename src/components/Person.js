@@ -1,15 +1,15 @@
-import React from "react";
+import { useState } from "react";
 
-import Pet from "./Pet";
-
-const Person = ({ name, age, petsName, petType }) => {
+const Person = ({ name, age, handleClick }) => {
+  const [due, setDue] = useState(false);
   return (
-    <>
-      <h2>
+    <div>
+      <h2 style={!due ? { color: "black" } : { color: "red" }}>
         My name is {name}, my age is {age} and
       </h2>
-      <Pet name={petsName} type={petType} />
-    </>
+      <button onClick={handleClick}>Remove</button>
+      <button onClick={() => setDue(true)}>Payment Due</button>
+    </div>
   );
 };
 
