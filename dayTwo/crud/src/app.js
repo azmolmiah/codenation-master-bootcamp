@@ -34,11 +34,15 @@ const app = async (yargsObj) => {
   } else if (yargsObj.delete) {
     await deleteFilm(collection, { _id: ObjectId(yargsObj.id) });
   } else if (yargsObj.search) {
-    await searchFilms(collection, {
-      title: yargsObj.title,
-      actor: yargsObj.actor,
-      rating: yargsObj.rating,
-    });
+    let searchParams = {};
+    if (yargsObj.title) {
+      Object.assign(searchParams, { title: new RegExp(yargsObj.title, "i") });
+    } else if (yargsObj.actor) {
+      Object.assign(searchParams, { actor: new RegExp(yargsObj.actor, "i") });
+    } else if (yargsObj.rating) {
+      Object.assign(searchParams, { rating: new RegExp(yargsObj.rating, "i") });
+    }
+    await searchFilms(collection, searchParams);
   } else {
     console.log("Incorrect command");
   }
