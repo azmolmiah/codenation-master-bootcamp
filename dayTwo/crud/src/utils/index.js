@@ -1,13 +1,14 @@
+// Function to add a document in the Mongo DB Film collection
 exports.addFilm = async (collection, filmObj) => {
   try {
     const addFilm = await collection.insertOne(filmObj);
-    console.log(addFilm);
-    console.log("Film added successfully");
+    console.log(addFilm, "Film added successfully");
   } catch (error) {
     console.log(error);
   }
 };
 
+// Function to list all documents in the Mongo DB Film collection
 exports.listFilms = async (collection) => {
   try {
     const listFilms = await collection.find().toArray();
@@ -17,33 +18,31 @@ exports.listFilms = async (collection) => {
   }
 };
 
-// Create function to update
+// Function to update a document in the Mongo DB Film collection
 exports.updateFilm = async (collection, _id, newFilmObj) => {
   try {
     const updateFilm = await collection.updateOne(_id, newFilmObj);
-    console.log(updateFilm);
-    console.log("Film updated successfully");
+    console.log(updateFilm, "Film updated successfully");
   } catch (error) {
     console.log(error);
   }
 };
 
-// Create function to delete
+// Function to delete a document in the Mongo DB Film collection
 exports.deleteFilm = async (collection, _id) => {
   try {
     const deleteFilm = await collection.findOneAndDelete(_id);
-    console.log(deleteFilm);
-    console.log("Film deleted successfully");
+    console.log(deleteFilm, "Film deleted successfully");
   } catch (error) {
     console.log(error);
   }
 };
 
-// Create function to search by name actor rating
+// Function to search by name actor rating in the Mongo DB Film collection
 exports.searchFilms = async (collection, query) => {
   try {
     const searchFilms = await collection.find(query).toArray();
-    console.log(searchFilms);
+    console.log(searchFilms, `${searchFilms.length} films found`);
   } catch (error) {
     console.log(error);
   }

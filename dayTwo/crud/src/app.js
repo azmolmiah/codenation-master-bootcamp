@@ -9,17 +9,21 @@ const {
 } = require("./utils");
 
 const app = async (yargsObj) => {
+  // Connect to MongoDB
   const collection = await connection();
 
-  if (yargsObj.add) {
+  if (yargsObj.addFilm) {
+    // Add film yargs option
     await addFilm(collection, {
       title: yargsObj.title,
       actor: yargsObj.actor,
       rating: yargsObj.rating,
     });
-  } else if (yargsObj.list) {
+  } else if (yargsObj.listAllFilm) {
+    // List films yargs option
     await listFilms(collection);
-  } else if (yargsObj.update) {
+  } else if (yargsObj.updateOneFilm) {
+    // Update film yargs option
     await updateFilm(
       collection,
       { _id: new ObjectId(yargsObj.id) },
@@ -31,9 +35,15 @@ const app = async (yargsObj) => {
         },
       }
     );
-  } else if (yargsObj.delete) {
+  } else if (yargsObj.updateMany) {
+    // Update many films yargs option
+  } else if (yargsObj.deleteOneFilm) {
+    // Delete film yargs option
     await deleteFilm(collection, { _id: ObjectId(yargsObj.id) });
-  } else if (yargsObj.search) {
+  } else if (yargsObj.deleteMany) {
+    // Delete many films yargs option
+  } else if (yargsObj.searchFilms) {
+    // Search films yargs option
     let searchParams = {};
     if (yargsObj.title) {
       Object.assign(searchParams, { title: new RegExp(yargsObj.title, "i") });
@@ -41,10 +51,16 @@ const app = async (yargsObj) => {
       Object.assign(searchParams, { actor: new RegExp(yargsObj.actor, "i") });
     } else if (yargsObj.rating) {
       Object.assign(searchParams, { rating: new RegExp(yargsObj.rating, "i") });
+    } else {
+      console.log(
+        "Please enter command like: --search with either one or more parameters (--title, --actor and --rating) and a value"
+      );
     }
     await searchFilms(collection, searchParams);
   } else {
-    console.log("Incorrect command");
+    console.log(
+      "Please enter command like: node src/app.js with one option (--add, --list, --update, --delete, and --search)"
+    );
   }
 
   await client.close();
