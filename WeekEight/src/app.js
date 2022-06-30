@@ -1,6 +1,11 @@
 const yargs = require("yargs");
 const { sequelize } = require("./db/connection");
-const { addMovie } = require("./movie/functions");
+const {
+  addMovie,
+  listMovies,
+  updateMovie,
+  deleteMovie,
+} = require("./movie/functions");
 
 const app = async (yargsObj) => {
   try {
@@ -10,10 +15,16 @@ const app = async (yargsObj) => {
       await addMovie({ title: yargsObj.title, actor: yargsObj.actor });
     } else if (yargsObj.list) {
       // List movie table
+      await listMovies();
     } else if (yargsObj.update) {
       // Update one entry in movie table
+      await updateMovie(
+        { title: yargsObj.newTitle, actor: yargsObj.newActor },
+        { where: { id: yargsObj.id } }
+      );
     } else if (yargsObj.delete) {
       // Delete one entry from movie table
+      await deleteMovie({ where: { id: yargsObj.id } });
     } else {
       console.log("Incorrect command");
     }
