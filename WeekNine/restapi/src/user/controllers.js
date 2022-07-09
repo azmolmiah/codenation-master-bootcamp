@@ -1,9 +1,12 @@
+const jwt = require("jsonwebtoken");
 const User = require("./model");
 
 exports.signUp = async (req, res) => {
   try {
     const newUser = await User.create(req.body); //req.body is an object contains k/v pairs that match the user model
-    res.send({ user: newUser });
+    const token = jwt.sign({ id: newUser._id }, process.env.JWT_SECRET); //Sign method creates a token with object payload hidden in it.
+    console.log(token);
+    res.send({ user: newUser, token });
   } catch (error) {
     console.log(error);
     res.send({ error });
@@ -20,8 +23,19 @@ exports.users = async (req, res) => {
   }
 };
 
+exports.user = async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id);
+    res.send({ user });
+  } catch (error) {
+    console.log(error);
+    res.send({ error });
+  }
+};
+
 exports.login = async (req, res) => {
   try {
+    console.log("In login" + req.user);
     res.send({ user: req.user });
   } catch (error) {
     console.log(error);
@@ -29,12 +43,11 @@ exports.login = async (req, res) => {
   }
 };
 
-exports.resetUsernameEmailAndPassword = async (req, res) => {
+exports.updateUser = async (req, res) => {
   try {
-    const updateUser = await User.findByIdAndUpdate(
-      { _id: req.params.id },
-      { $set: req.body }
-    );
+    const updateUser = await User.findByIdAndUpdate(req.params.id, {
+      $set: req.body,
+    });
     res.send({ user: updateUser });
   } catch (error) {
     console.log(error);
@@ -44,7 +57,7 @@ exports.resetUsernameEmailAndPassword = async (req, res) => {
 
 exports.deleteUser = async (req, res) => {
   try {
-    const deleteUser = await User.findByIdAndDelete({ _id: req.params.id });
+    const deleteUser = await User.findByIdAndDelete(req.params.id);
     res.send({ user: deleteUser });
   } catch (error) {
     console.log(error);
