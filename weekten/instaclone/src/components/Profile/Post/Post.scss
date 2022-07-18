@@ -1,0 +1,8 @@
+.app__comment, .app__description {
+    &:focus-visible {
+        border: none;
+        outline:0px !important;
+        -webkit-appearance:none;
+        box-shadow: none !important;
+    }
+}

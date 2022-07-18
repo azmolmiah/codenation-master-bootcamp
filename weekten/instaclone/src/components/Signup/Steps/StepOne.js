@@ -1,6 +1,6 @@
 import React from "react";
 
-import { images } from "../../constants";
+import { images } from "../../../assets";
 
 const StepOne = ({ setEmail, setUsername, setPassword, setFullname }) => {
   return (
@@ -55,22 +55,22 @@ const StepOne = ({ setEmail, setUsername, setPassword, setFullname }) => {
       <p className="fw-bold text-secondary app__form-details">
         People who use our service may have uploaded your contact information to
         Instagram.{" "}
-        <a href="#" className="link-dark">
+        <a href="#" className="link-dark text-decoration-none">
           Learn more
         </a>
       </p>
 
       <p className="fw-bold text-secondary app__form-details">
         By signing up, you agree to our{" "}
-        <a href="#" className="link-dark">
+        <a href="#" className="link-dark text-decoration-none">
           Terms
         </a>
         . Learn how we collect, use and share your data in our{" "}
-        <a href="#" className="link-dark">
+        <a href="#" className="link-dark text-decoration-none">
           Data Policy
         </a>
         , and how we use cookies and similar technology in our{" "}
-        <a href="#" className="link-dark">
+        <a href="#" className="link-dark text-decoration-none">
           Cookie Policy
         </a>
         .

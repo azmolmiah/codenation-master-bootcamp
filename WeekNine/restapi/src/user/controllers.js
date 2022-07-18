@@ -7,6 +7,9 @@ exports.signUp = async (req, res) => {
     const token = jwt.sign({ id: newUser._id }, process.env.JWT_SECRET); //Sign method creates a token with object payload hidden in it.
     console.log(token);
     res.send({ user: newUser, token });
+    if (newUser.verification) {
+      await User.findByIdAndUpdate(newUser.id, { $set: { verified: true } });
+    }
   } catch (error) {
     console.log(error);
     res.send({ error });
